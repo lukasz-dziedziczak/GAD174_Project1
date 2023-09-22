@@ -4,6 +4,7 @@
 #include "TP_WeaponComponent.h"
 #include "GAD174_Project1Character.h"
 #include "GAD174_Project1Projectile.h"
+#include "LaserProjectile.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Kismet/GameplayStatics.h"
@@ -41,7 +42,7 @@ void UTP_WeaponComponent::Fire()
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 	
 			// Spawn the projectile at the muzzle
-			World->SpawnActor<AGAD174_Project1Projectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+			World->SpawnActor<ALaserProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
 		}
 	}
 	

@@ -16,7 +16,7 @@ class GAD174_PROJECT1_API UTP_WeaponComponent : public USkeletalMeshComponent
 public:
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category=Projectile)
-	TSubclassOf<class AGAD174_Project1Projectile> ProjectileClass;
+	TSubclassOf<class ALaserProjectile> ProjectileClass;
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
