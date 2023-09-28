@@ -43,8 +43,9 @@ void ALaserProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, U
 		UWorld* const World = GetWorld();
 		if (World != nullptr)
 		{
-			FRotator SpawnRotation = World->GetFirstPlayerController()->PlayerCameraManager->GetCameraRotation();
-			SpawnRotation.Add(0,90,0);
+			/*FRotator SpawnRotation = World->GetFirstPlayerController()->PlayerCameraManager->GetCameraRotation();
+			SpawnRotation.Add(0,90,0);*/
+			FRotator SpawnRotation = OtherActor->GetActorRotation();
 
 			//Set Spawn Collision Handling Override
 			FActorSpawnParameters ActorSpawnParams;
