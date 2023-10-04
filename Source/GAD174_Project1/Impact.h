@@ -19,4 +19,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	class UPaperFlipbookComponent* ImapctEffect;
 
+protected:
+	virtual void BeginPlay();
+
 };

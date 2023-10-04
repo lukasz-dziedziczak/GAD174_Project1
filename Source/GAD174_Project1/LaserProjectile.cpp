@@ -52,7 +52,7 @@ void ALaserProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, U
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
 			World->SpawnActor<AImpact>(ImpactClass, Hit.ImpactPoint, SpawnRotation);
-			UE_LOG(LogTemp, Warning, TEXT("Spawned Impact"));
+			//UE_LOG(LogTemp, Warning, TEXT("Spawned Impact"));
 		}
 
 		

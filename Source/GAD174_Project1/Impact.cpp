@@ -11,3 +11,10 @@ AImpact::AImpact()
 
 }
 
+void AImpact::BeginPlay()
+{
+    Super::BeginPlay();
+
+    SetLifeSpan(ImapctEffect->GetFlipbookLength());
+}
+
