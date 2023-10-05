@@ -126,6 +126,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Test")
 	FWeaponDelegate OnWeaponFire;
 
+	UPROPERTY(BlueprintAssignable, Category = "Test")
+	FWeaponDelegate OnBeginReload;
+
 protected:
 	/** Ends gameplay for this component. */
 	UFUNCTION()

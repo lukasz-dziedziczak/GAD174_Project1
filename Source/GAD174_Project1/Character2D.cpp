@@ -57,7 +57,7 @@ void ACharacter2D::BeginPlay()
 
 	Weapon2D->Stop();
 
-
+	ammoCount = 9;
 }
 
 // Called to bind functionality to input
@@ -184,8 +184,8 @@ void ACharacter2D::Fire()
 	}
 	else
 	{
-		Reload();
-		OnWeaponFire.Broadcast();
+		//Reload();
+		OnBeginReload.Broadcast();
 	}
 	
 }
