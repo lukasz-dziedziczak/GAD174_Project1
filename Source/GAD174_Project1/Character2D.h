@@ -15,6 +15,8 @@ class UCameraComponent;
 class UAnimMontage;
 class USoundBase;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FWeaponDelegate);
+
 UCLASS()
 class GAD174_PROJECT1_API ACharacter2D : public ACharacter
 {
@@ -115,10 +117,23 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void Fire();
 
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void Reload();
+
+	UFUNCTION(BlueprintPure)
+	int AmmoCount() { return ammoCount; }
+
+	UPROPERTY(BlueprintAssignable, Category = "Test")
+	FWeaponDelegate OnWeaponFire;
+
 protected:
 	/** Ends gameplay for this component. */
 	UFUNCTION()
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 	float flipbookTimer;
+
+	int ammoCount;
+
+
 };

@@ -56,6 +56,8 @@ void ACharacter2D::BeginPlay()
 	}
 
 	Weapon2D->Stop();
+
+
 }
 
 // Called to bind functionality to input
@@ -141,37 +143,54 @@ void ACharacter2D::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void ACharacter2D::Fire()
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Weapon Fired"));
-
-	// Try and fire a projectile
-	if (ProjectileClass != nullptr)
+	if (ammoCount > 0)
 	{
-		UWorld* const World = GetWorld();
-		if (World != nullptr)
+		ammoCount--;
+
+		// Try and fire a projectile
+		if (ProjectileClass != nullptr)
 		{
-			APlayerController* PlayerController = Cast<APlayerController>(GetController());
-			const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
-			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-			const FVector SpawnLocation = /*GetOwner()->*/GetActorLocation() + SpawnRotation.RotateVector(MuzzleOffset);
+			UWorld* const World = GetWorld();
+			if (World != nullptr)
+			{
+				APlayerController* PlayerController = Cast<APlayerController>(GetController());
+				const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
+				// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+				const FVector SpawnLocation = /*GetOwner()->*/GetActorLocation() + SpawnRotation.RotateVector(MuzzleOffset);
 
-			//Set Spawn Collision Handling Override
-			FActorSpawnParameters ActorSpawnParams;
-			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+				//Set Spawn Collision Handling Override
+				FActorSpawnParameters ActorSpawnParams;
+				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
-			// Spawn the projectile at the muzzle
-			World->SpawnActor<ALaserProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+				// Spawn the projectile at the muzzle
+				World->SpawnActor<ALaserProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+			}
 		}
-	}
 
-	// Try and play the sound if specified
-	if (FireSound != nullptr)
-	{
-		UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
-	}
+		// Try and play the sound if specified
+		if (FireSound != nullptr)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
+		}
 
-	// Play flipbook animation
-	if (Weapon2D != nullptr)
-	{
-		Weapon2D->Play();
-		flipbookTimer = Weapon2D->GetFlipbookLength();
+		// Play flipbook animation
+		if (Weapon2D != nullptr)
+		{
+			Weapon2D->Play();
+			flipbookTimer = Weapon2D->GetFlipbookLength();
+		}
+
+		OnWeaponFire.Broadcast();
 	}
+	else
+	{
+		Reload();
+		OnWeaponFire.Broadcast();
+	}
+	
+}
+
+void ACharacter2D::Reload()
+{
+	ammoCount = 9;
 }
